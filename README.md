@@ -5,28 +5,26 @@
   <a href="#-english">English</a>
 </p>
 
-
 ---
 
 ## 🇩🇪 Deutsch
 
-
 ### 🚀 Funktionen
-* **Echtzeit-Festplattenanalyse**: Erkennt automatisch das Betriebssystem и berechnet den belegten sowie freien Speicherplatz in Prozent und Gigabyte.
+* **Echtzeit-Festplattenanalyse**: Erkennt automatisch das Betriebssystem und berechnet den belegten sowie freien Speicherplatz in Prozent und Gigabyte.
 * **Dynamische CPU-Simulation**: Simuliert kontinuierliche Änderungen der Prozessorauslastung mithilfe von zeitbasierten Zufallswerten zur Demonstration von UI-Updates.
-* **Intelligente Farbcodierung**: Ändert die Textfarbe der Widgets щелчком мыши (Grün, Gelb, Orange, Rot) basierend auf der Kritikalität der Ressourcenauslastung.
+* **Intelligente Farbcodierung**: Ändert die Textfarbe der Widgets dynamisch (Grün, Gelb, Orange, Rot) basierend auf der Kritikalität der Ressourcenauslastung.
 * **Automatische Aktualisierung**: Die Benutzeroberfläche liest und aktualisiert die Systemdaten vollautomatisch alle 2000 Millisekunden (2 Sekunden).
 * **Modernes GUI-Design**: Nutzt das `clam`-Theme von Tkinter für eine konsistente und plattformübergreifende Darstellung der Fortschrittsbalken.
 
 ### 🛠️ Technologien
 * Python 3.x
-* Integrierte Module: `os`, `shutil`, `sys`, `datetime`, `random`
+* Integrierte Module: `os`, `shutil`, `sys`, `datetime`, `random`, `string`
 * GUI-Bibliothek: `tkinter` (Standardmäßig in Python enthalten)
 
 ### 📂 Struktur der Benutzeroberfläche
 Das Fenster ist in folgende Bereiche unterteilt:
 * **Uhrzeit & Status**: Zeigt den Anwendungsnamen und die exakte Uhrzeit der letzten Datenaktualisierung.
-* **Festplatten-Anzeige**: Fortschrittsbalken und Statusmeldung für den Hauptspeicher (`C:\` unter Windows, `/` unter Unix/Linux).
+* **Festplatten-Anzeige**: Fortschrittsbalken und Statusmeldung für alle aktiven Partitionen (`C:\`, `D:\` unter Windows oder `/` unter Unix/Linux).
 * **Prozessor-Anzeige**: Fortschrittsbalken und Prozentanzeige für die simulierte Prozessorauslastung.
 
 ### 📦 Installation & Start
@@ -34,15 +32,18 @@ Das Fenster ist in folgende Bereiche unterteilt:
    ```bash
    git clone https://github.com/KristinaAlokhina/system_monitor
    ```
-2. Skript ausführen:
+2. In den Projektordner wechseln:
    ```bash
-   system_monitor.py
+   cd system_monitor
+   ```
+3. Skript ausführen:
+   ```bash
+   python system_monitor.py
    ```
 
 ---
 
 ## 🇺🇸 English
-
 
 ### 🚀 Features
 * **Real-time Disk Tracking**: Automatically detects your OS and calculates used and free storage space in percentages and Gigabytes.
@@ -53,13 +54,13 @@ Das Fenster ist in folgende Bereiche unterteilt:
 
 ### 🛠️ Technologies
 * Python 3.x
-* Built-in modules: `os`, `shutil`, `sys`, `datetime`, `random`
+* Built-in modules: `os`, `shutil`, `sys`, `datetime`, `random`, `string`
 * GUI Library: `tkinter` (Bundled with standard Python installations)
 
 ### 📂 User Interface Structure
 The layout is divided into the following sections:
 * **Header & Timestamp**: Displays the app title and the exact time of the latest data refresh.
-* **Disk Space Box**: Status label and progress bar for the primary drive (`C:\` on Windows, `/` on Unix/Linux).
+* **Disk Space Box**: Status label and progress bar for all active drives (`C:\` on Windows, `/` on Unix/Linux).
 * **CPU Load Box**: Status label and progress bar showing the simulated processor load.
 
 ### 📦 Installation & Setup
@@ -67,7 +68,11 @@ The layout is divided into the following sections:
    ```bash
    git clone https://github.com/KristinaAlokhina/system_monitor
    ```
-2. Run the script:
+2. Navigate to the project directory:
    ```bash
-   system_monitor.py
+   cd system_monitor
+   ```
+3. Run the script:
+   ```bash
+   python system_monitor.py
    ```
