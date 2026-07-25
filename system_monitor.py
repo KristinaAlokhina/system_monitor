@@ -5,102 +5,148 @@ import tkinter as tk
 from tkinter import ttk
 from datetime import datetime
 import random
+import string
+
+def get_existing_drives():
+    """Findet automatisch alle aktiven Festplatten/Partitionen im System."""
+    drives = []
+    if os.name == 'nt':  # Für Windows
+        for letter in string.ascii_uppercase:
+            drive = f"{letter}:\\"
+            if os.path.exists(drive):
+                try:
+                    shutil.disk_usage(drive)
+                    drives.append(drive)
+                except Exception:
+                    continue
+    else:  # Für Linux / macOS
+        drives = ['/']
+        for mnt in ['/media', '/mnt']:
+            if os.path.exists(mnt):
+                for folder in os.listdir(mnt):
+                    path = os.path.join(mnt, folder)
+                    if os.path.islink(path) or os.path.ismount(path) or os.path.exists(path):
+                        drives.append(path)
+    return drives
 
 class SystemMonitorApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("System-Ressourcen-Monitor")
-        self.root.geometry("450x400")
+        self.root.title("Advanced Multi-Disk & CPU Monitor")
         self.root.configure(bg="#f5f5f5")
         
-        # Titelzeile
+        # Titel
         lbl_title = tk.Label(root, text="System-Ressourcen-Monitor", font=("Arial", 16, "bold"), bg="#f5f5f5", fg="#333333")
         lbl_title.pack(pady=10)
 
-        # Zeitstempel der letzten Aktualisierung
+        # Zeitstempel
         self.lbl_time = tk.Label(root, text="", font=("Arial", 10), bg="#f5f5f5", fg="#666666")
         self.lbl_time.pack(pady=2)
 
-        # Container für den Festplattenspeicher
-        self.create_resource_box("Festplattenspeicher (HDD/SSD)", "disk")
+        # Scrollbarer Bereich
+        self.canvas = tk.Canvas(root, bg="#f5f5f5", highlightthickness=0)
+        self.scrollbar = ttk.Scrollbar(root, orient="vertical", command=self.canvas.yview)
+        self.scroll_frame = ttk.Frame(self.canvas)
 
-        # Container für die CPU-Simulation
-        self.create_resource_box("Prozessorauslastung (CPU-Sim)", "cpu")
+        self.scroll_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        )
+        self.canvas.create_window((0, 0), window=self.scroll_frame, anchor="nw")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
-        # Start der kontinuierlichen Aktualisierung (alle 2000 ms / 2 Sekunden)
+        self.canvas.pack(side="left", fill="both", expand=True, padx=10)
+        self.scrollbar.pack(side="right", fill="y")
+
+        # CPU Box erstellen
+        self.create_cpu_box()
+
+        # Alle aktiven Laufwerke ermitteln und Boxen erstellen
+        self.active_drives = get_existing_drives()
+        self.disk_elements = {}
+
+        for drive in self.active_drives:
+            self.create_disk_box(drive)
+
+        # Fenstergröße dynamisch anpassen
+        window_height = 180 + (len(self.active_drives) * 90)
+        window_height = min(window_height, 600)  # Maximale Höhe begrenzen
+        self.root.geometry(f"480x{window_height}")
+
+        # Start der Echtzeit-Schleife
         self.update_resources()
 
-    def create_resource_box(self, title, ref):
-        """Erstellt eine Box zur Anzeige einer Ressource (Text + Fortschrittsbalken)"""
-        frame = tk.LabelFrame(self.root, text=title, font=("Arial", 11, "bold"), bg="#f5f5f5", padx=15, pady=10)
-        frame.pack(fill="x", padx=20, pady=10)
+    def create_cpu_box(self):
+        frame = tk.LabelFrame(self.scroll_frame, text="Prozessorauslastung (CPU-Sim)", font=("Arial", 11, "bold"), padx=15, pady=10)
+        frame.pack(fill="x", padx=10, pady=5)
 
-        # Textueller Ladestatus
-        lbl_status = tk.Label(frame, text="Daten werden geladen...", font=("Arial", 11), bg="#f5f5f5")
+        lbl_status = tk.Label(frame, text="Lade Daten...", font=("Arial", 11))
         lbl_status.pack(anchor="w")
 
-        # Fortschrittsbalken (Progress Bar)
-        progress = ttk.Progressbar(frame, orient="horizontal", length=350, mode="determinate")
+        progress = ttk.Progressbar(frame, orient="horizontal", length=400, mode="determinate")
         progress.pack(pady=5, fill="x")
 
-        # Speichern der Referenzen für die dynamische Aktualisierung
-        if ref == "disk":
-            self.lbl_disk = lbl_status
-            self.progress_disk = progress
-        elif ref == "cpu":
-            self.lbl_cpu = lbl_status
-            self.progress_cpu = progress
+        self.lbl_cpu = lbl_status
+        self.progress_cpu = progress
+
+    def create_disk_box(self, drive_path):
+        display_name = f"Laufwerk {drive_path}" if os.name == 'nt' else f"Verzeichnis {drive_path}"
+        frame = tk.LabelFrame(self.scroll_frame, text=display_name, font=("Arial", 11, "bold"), padx=15, pady=10)
+        frame.pack(fill="x", padx=10, pady=5)
+
+        lbl_status = tk.Label(frame, text="Analysiere...", font=("Arial", 11))
+        lbl_status.pack(anchor="w")
+
+        progress = ttk.Progressbar(frame, orient="horizontal", length=400, mode="determinate")
+        progress.pack(pady=5, fill="x")
+
+        self.disk_elements[drive_path] = {
+            "label": lbl_status,
+            "progress": progress
+        }
 
     def get_color_code(self, percentage):
-        """Gibt den Farbcode basierend auf dem Auslastungsprozentsatz zurück"""
         if percentage < 50:
-            return "#2ecc71"  # Grün: Alles OK
+            return "#2ecc71"  # Grün
         elif percentage < 70:
-            return "#f1c40f"  # Gelb: Leicht ausgelastet
+            return "#f1c40f"  # Gelb
         elif percentage < 85:
-            return "#e67e22"  # Orange: Hohe Auslastung
+            return "#e67e22"  # Orange
         else:
-            return "#e74c3c"  # Rot: Kritischer Bereich
+            return "#e74c3c"  # Rot
 
     def update_resources(self):
-        """Hauptmethode zur Aktualisierung der Daten auf dem Bildschirm"""
-        # 1. Aktualisierung der Uhrzeit
+        # 1. Zeit aktualisieren
         self.lbl_time.config(text=f"Letzte Aktualisierung: {datetime.now().strftime('%H:%M:%S')}")
 
-        # 2. Berechnung der Festplattendaten
-        root_path = "C:\\" if os.name == 'nt' else '/'
-        try:
-            total, used, free = shutil.disk_usage(root_path)
-            used_percent = (used / total) * 100
-            free_gb = free / (2**30)
-            total_gb = total / (2**30)
+        # 2. Alle Festplatten aktualisieren
+        for drive_path, elements in self.disk_elements.items():
+            try:
+                total, used, free = shutil.disk_usage(drive_path)
+                used_percent = (used / total) * 100
+                free_gb = free / (2**30)
+                total_gb = total / (2**30)
 
-            self.lbl_disk.config(
-                text=f"Belegt: {used_percent:.1f}% ({free_gb:.1f} GB von {total_gb:.1f} GB frei)"
-            )
-            self.progress_disk['value'] = used_percent
+                elements["label"].config(
+                    text=f"Genutzt: {used_percent:.1f}% ({free_gb:.1f} GB von {total_gb:.1f} GB frei)"
+                )
+                elements["progress"]['value'] = used_percent
+                elements["label"].config(fg=self.get_color_code(used_percent))
+            except Exception:
+                elements["label"].config(text="Fehler bei der Analyse", fg="red")
 
-            # Textfarbe basierend auf der Kritikalität der Festplattenbelegung ändern
-            self.lbl_disk.config(fg=self.get_color_code(used_percent))
-        except Exception:
-            self.lbl_disk.config(text="Fehler bei der Festplattenanalyse", fg="red")
-
-        # 3. Simulation der CPU-Dynamik (Zufallszahlen von 15% bis 95%)
+        # 3. CPU-Simulation aktualisieren
         cpu_percent = random.randint(15, 95)
-
         self.lbl_cpu.config(text=f"Aktuelle Auslastung: {cpu_percent}%")
         self.progress_cpu['value'] = cpu_percent
         self.lbl_cpu.config(fg=self.get_color_code(cpu_percent))
 
-        # Endlosschleife zur Aktualisierung alle 2 Sekunden (2000 Millisekunden)
+        # Wiederholung alle 2 Sekunden
         self.root.after(2000, self.update_resources)
 
 if __name__ == "__main__":
     window = tk.Tk()
-    
-    # Stileinstellungen für die Fortschrittsbalken
     style = ttk.Style()
     style.theme_use('clam')
-    
     app = SystemMonitorApp(window)
     window.mainloop()
