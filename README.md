@@ -9,67 +9,78 @@
 
 ## 🇩🇪 Deutsch
 
-### 🚀 Funktionen
-* **Echtzeit-Festplattenanalyse**: Erkennt automatisch das Betriebssystem und berechnet den belegten sowie freien Speicherplatz in Prozent und Gigabyte.
-* **Dynamische CPU-Simulation**: Simuliert kontinuierliche Änderungen der Prozessorauslastung mithilfe von zeitbasierten Zufallswerten zur Demonstration von UI-Updates.
-* **Intelligente Farbcodierung**: Ändert die Textfarbe der Widgets dynamisch (Grün, Gelb, Orange, Rot) basierend auf der Kritikalität der Ressourcenauslastung.
-* **Automatische Aktualisierung**: Die Benutzeroberfläche liest und aktualisiert die Systemdaten vollautomatisch alle 2000 Millisekunden (2 Sekunden).
-* **Modernes GUI-Design**: Nutzt das `clam`-Theme von Tkinter für eine konsistente und plattformübergreifende Darstellung der Fortschrittsbalken.
+Ein leichtgewichtiger, plattformunabhängiger System-Monitor mit grafischer Benutzeroberfläche zur Echtzeit-Überwachung von Speicherplatz und CPU-Auslastung.
 
-### 🛠️ Technologien
-* Python 3.x
-* Integrierte Module: `os`, `shutil`, `sys`, `datetime`, `random`, `string`
-* GUI-Bibliothek: `tkinter` (Standardmäßig in Python enthalten)
+### 🌟 Hauptmerkmale
+* **Automatisierte Laufwerkserkennung**: Identifiziert selbstständig das zugrundeliegende Betriebssystem und ermittelt den freien sowie belegten Speicherplatz (in GB und Prozent).
+* **Interaktive Prozessor-Simulation**: Veranschaulicht kontinuierliche UI-Aktualisierungen durch eine dynamische, zeitgesteuerte Simulation der CPU-Last.
+* **Visuelles Warnsystem**: Intelligente Farbcodierung (Grün, Gelb, Orange, Rot), die sich dem aktuellen Auslastungs- und Kritikalitätsstatus der Ressourcen anpasst.
+* **Live-Aktualisierung**: Vollautomatische Daten-Resynchronisation im festen Intervall von 2000 Millisekunden (2 Sekunden).
+* **Plattformübergreifendes Design**: Nutzung des integrierten `clam`-Themes von Tkinter für eine saubere und konsistente Darstellung von Fortschrittsbalken auf allen OS-Systemen.
 
-### 📂 Struktur der Benutzeroberfläche
-Das Fenster ist in folgende Bereiche unterteilt:
-* **Uhrzeit & Status**: Zeigt den Anwendungsnamen und die exakte Uhrzeit der letzten Datenaktualisierung.
-* **Festplatten-Anzeige**: Fortschrittsbalken und Statusmeldung für alle aktiven Partitionen (`C:\`, `D:\` unter Windows oder `/` unter Unix/Linux).
-* **Prozessor-Anzeige**: Fortschrittsbalken und Prozentanzeige für die simulierte Prozessorauslastung.
+### 🛠️ Technologien & Bibliotheken
+* **Laufzeitumgebung**: Python 3.x
+* **Standard-Module**: `os`, `shutil`, `sys`, `datetime`, `random`, `string`
+* **GUI-Framework**: `tkinter` (keine externen Abhängigkeiten erforderlich)
 
-### 📦 Installation & Start
-1. Repository klonen:
-   ```bash
-   git clone https://github.com/KristinaAlokhina/system_monitor
-   ```
-2. In den Projektordner wechseln:
-   ```bash
-   cd system_monitor
-   ```
-3. Skript ausführen:
-   ```bash
-   python system_monitor.py
-   ```
+### 📂 Aufbau der Benutzeroberfläche
+Die Anwendung ist modular in drei wesentliche Segmente unterteilt:
+1. **Kopfzeile & Zeitstempel**: Zeigt den Status sowie die exakte Uhrzeit der letzten Datenabfrage an.
+2. **Speicherplatz-Panel**: Visualisiert den Status aller aktiven Partitionen (`C:\`, `D:\` für Windows oder `/` für Unix/Linux) via Progress-Bar.
+3. **Prozessor-Panel**: Zeigt die simulierte CPU-Auslastung in Echtzeit an.
+
+### 📦 Schnellstart-Anleitung
+Führen Sie die folgenden Befehle in Ihrem Terminal aus, um das Projekt zu starten:
+
+```bash
+# 1. Repository herunterladen
+git clone https://github.com/KristinaAlokhina/system_monitor
+
+# 2. In das Projektverzeichnis wechseln
+cd system_monitor
+
+# 3. Anwendung starten
+python system_monitor.py
+```
 
 ---
 
 ## 🇺🇸 English
 
-### 🚀 Features
-* **Real-time Disk Tracking**: Automatically detects your OS and calculates used and free storage space in percentages and Gigabytes.
-* **Dynamic CPU Simulation**: Simulates continuous processor load changes using time-based random variance to demonstrate UI state updates.
-* **Smart Color Coding**: UI text labels dynamically change colors (Green, Yellow, Orange, Red) based on resource critical levels.
-* **Automated Refresh**: The interface automatically pulls and updates system data every 2000 milliseconds (2 seconds).
-* **Modern UI Styling**: Uses Tkinter's `clam` theme for clean and consistent cross-platform progress bar rendering.
+A lightweight, cross-platform system monitor featuring a graphical user interface for real-time tracking of disk space and CPU usage.
 
-### 🛠️ Technologies
-* Python 3.x
-* Built-in modules: `os`, `shutil`, `sys`, `datetime`, `random`, `string`
-* GUI Library: `tkinter` (Bundled with standard Python installations)
+### 🚀 Key Features
+* **Automated Drive Detection**: Automatically identifies the host OS and calculates available vs. used storage in both Gigabytes and percentages.
+* **Dynamic CPU Simulation**: Demonstrates seamless UI updates using a time-based random variance model for processor load simulation.
+* **Smart Alert System**: Adaptive color coding (Green, Yellow, Orange, Red) that shifts dynamically based on resource critical levels.
+* **Instant Refresh**: Automatic data polling and interface synchronization every 2000 milliseconds (2 seconds).
+* **Cross-Platform UI**: Built on Tkinter's native `clam` theme to ensure clean, consistent progress bar rendering across different operating systems.
 
-### 📂 User Interface Structure
-The layout is divided into the following sections:
-* **Header & Timestamp**: Displays the app title and the exact time of the latest data refresh.
-* **Disk Space Box**: Status label and progress bar for all active drives (`C:\` on Windows, `/` on Unix/Linux).
-* **CPU Load Box**: Status label and progress bar showing the simulated processor load.
+### 🛠️ Tech Stack
+* **Runtime**: Python 3.x
+* **Built-in Modules**: `os`, `shutil`, `sys`, `datetime`, `random`, `string`
+* **GUI Library**: `tkinter` (included in standard Python installations)
+
+### 📂 Layout Structure
+The dashboard is split into three main functional zones:
+1. **Header & Timestamp**: Displays the application status and the precise time of the most recent data refresh.
+2. **Storage Allocation Box**: Renders progress bars and text metrics for all active partitions (`C:\`, `D:\` on Windows or `/` on Unix/Linux).
+3. **Processor Load Box**: Monitors and visualizes the simulated real-time CPU capacity.
 
 ### 📦 Installation & Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/KristinaAlokhina/system_monitor
-   ```
-2. Navigate to the project directory:
-   ```bash
+Run the following commands in your terminal to deploy and launch the script:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/KristinaAlokhina/system_monitor
+
+# 2. Navigate to the project directory
+cd system_monitor
+
+# 3. Run the application
+python system_monitor.py
+```
+
    cd system_monitor
    ```
 3. Run the script:
