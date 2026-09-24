@@ -1,86 +1,192 @@
-# System-Ressourcen-Monitor
+<p align="center">
+  <ins><b><kbd>&nbsp;DESKTOP APPLICATION&nbsp;</kbd></b></ins>
+</p>
+
+<h1 align="center" style="font-size: 2.5rem; font-weight: 900; color: #1a1a1a; margin-top: 10px; margin-bottom: 10px; border-bottom: none;">
+  📊 ADVANCED SYSTEM MONITOR (v1.0)
+</h1>
 
 <p align="center">
-  <a href="#-deutsch">Deutsch</a> • 
-  <a href="#-english">English</a>
+  <strong>Ein moderner Multi-Laufwerk- und CPU-Ressourcenmonitor mit nativer grafischer Benutzeroberfläche.</strong>
+  <br />
+  <i>Entwickelt mit Python, Tkinter und Psutil für präzise Hardware-Überwachung in Echtzeit.</i>
+</p>
+
+<p align="center">
+  <a href="#-deutsch">🇩🇪 Deutsch</a> • 
+  <a href="#-english">🇺🇸 English</a> • 
+  <a href="#-русский">🇷🇺 Русский</a> • 
+  <a href="#-українська">🇺🇦 Українська</a>
 </p>
 
 ---
 
 ## 🇩🇪 Deutsch
 
-Ein leichtgewichtiger, plattformunabhängiger System-Monitor mit grafischer Benutzeroberfläche zur Echtzeit-Überwachung von Speicherplatz und realer CPU-Auslastung.
+Die Anwendung bietet ein kompaktes, hochfunktionales Dashboard zur Echtzeitüberwachung von Systemspeicher und Prozessorauslastung. Perfekt optimiert für Administratoren zur schnellen Diagnose von Speicherengpässen.
 
-### 🌟 Hauptmerkmale
-* **Echte CPU-Überwachung**: Nutzt die `psutil`-Bibliothek zur präzisen Erfassung der tatsächlichen Prozessorlast in Echtzeit (keine Simulation).
-* **Automatisierter Admin-Modus**: Prüft beim Start die Benutzerrechte und fordert unter Windows (UAC) oder Linux/macOS (Sudo) automatisch Administratorrechte an.
-* **Dynamischer Theme-Wechsel**: Ermöglicht das Umschalten zwischen einem modernen Dark-Mode und einem klassischen Light-Mode per Knopfdruck zur Laufzeit.
-* **Automatisierte Laufwerkserkennung**: Identifiziert selbstständig das Betriebssystem und ermittelt den freien sowie belegten Speicherplatz aller aktiven Partitionen (in GB und Prozent).
-* **Visuelles Warnsystem**: Intelligente Farbcodierung (Grün, Gelb, Orange, Rot), die sich dem aktuellen Auslastungs- und Kritikalitätsstatus der Ressourcen anpasst.
-* **Live-Aktualisierung**: Vollautomatische Daten-Resynchronisation im festen Intervall von 1000 Millisekunden (1 Sekunde) für präzise CPU-Werte.
+### 🚀 Funktionen
+* **Multi-Sprachunterstützung (4 Sprachen) 🌍**: Vollständige Lokalisierung für Deutsch, Englisch, Russisch und Ukrainisch. Die Sprache kann mitten im Betrieb per Knopfdruck gewechselt werden und wird für den nächsten Start in `config.json` gespeichert.
+* **Erweiterte Farbcodierung 🎨**: Prozentsätze ändern dynamisch ihre Farbe (Grün ➔ Gelb ➔ Orange ➔ Rot) basierend auf der aktuellen Hardware-Last.
+* **Dynamische Laufwerkserkennung 💾**: Erkennt automatisch alle aktiven Partitionen und Mount-Punkte auf Windows- und Unix-Systemen, berechnet freien/belegten Speicherplatz und passt die Fensterhöhe flexibel an.
+* **Theme-Umschalter (Dark/Light) 🌓**: Schneller Wechsel zwischen augenschonendem Dunkelmodus und klarem Hellmodus.
+* **Erzwungener Admin-Modus 🛡️**: Startet sich automatisch mit erhöhten Rechten neu, falls erforderlich, um blockierungsfreien Zugriff auf Systemmetriken zu gewährleisten.
 
-### 🛠️ Technologien & Bibliotheken
-* **Laufzeitumgebung**: Python 3.x
-* **Standard-Module**: `os`, `shutil`, `sys`, `datetime`, `string`, `ctypes`
-* **Externe Abhängigkeiten**: `psutil` (wird bei Fehlen automatisch im globalen Kontext installiert)
-* **GUI-Framework**: `tkinter` & `ttk`
+### 🛠️ Technologien
+* **Framework**: Python Tkinter (mit erweitertem `ttk`-Flachstyling)
+* **Metriken**: `psutil` (Prozessordaten), `shutil` (Speicheranalysen)
+* **Daten-Persistenz**: Native `json`-Konfiguration zur persistenten Speicherung der Benutzersprache.
 
-### 📂 Aufbau der Benutzeroberfläche
-Die Anwendung ist modular in drei wesentliche Segmente unterteilt:
-1. **Kopfzeile & Steuerung**: Enthält den Titel, den Button zum Wechseln des Themes sowie die exakte Uhrzeit der letzten Datenabfrage.
-2. **Prozessor-Panel**: Visualisiert die reale CPU-Auslastung mittels eines farbcodierten Fortschrittsbalkens.
-3. **Speicherplatz-Panel**: Zeigt den Status aller aktiven Partitionen (`C:\`, `D:\` etc. für Windows oder `/` für Unix/Linux) über scrollbare Fortschrittsbalken an.
+### 📦 Installation & Ausführung
 
-### 📦 Schnellstart-Anleitung
-Führen Sie die folgenden Befehle in Ihrem Terminal aus, um das Projekt zu starten:
+#### Option A: Standalone Ausführung (.exe)
+Laden Sie die kompilierte Datei `system_monitor.exe` aus den Releases herunter und führen Sie sie direkt aus.
 
-```bash
-# 1. Repository herunterladen
-git clone https://github.com/KristinaAlokhina/system_monitor
+#### Option B: Ausführung aus dem Quellcode
+Es werden Python 3.x und die `psutil`-Bibliothek benötigt.
 
-# 2. In das Projektverzeichnis wechseln
-cd system_monitor
-
-# 3. Anwendung starten (fordert Admin-Rechte an)
-python system_monitor.py
-```
+1. Repository klonen:
+   ```bash
+   git clone https://github.com
+   ```
+2. In den Projektordner wechseln:
+   ```bash
+   cd system-monitor
+   ```
+3. Abhängigkeiten installieren:
+   ```bash
+   pip install psutil
+   ```
+4. Die Anwendung starten:
+   ```bash
+   python system_monitor.py
+   ```
 
 ---
 
 ## 🇺🇸 English
 
-A lightweight, cross-platform system monitor featuring a graphical user interface for real-time tracking of real CPU load and disk space allocation.
+A high-performance system metrics dashboard designed to aggregate and view hardware workloads, including individual storage drives and real-time thread utilization.
 
-### 🚀 Key Features
-* **Real CPU Monitoring**: Utilizes the `psutil` library to accurately capture and display actual hardware processor capacity (no more simulation).
-* **Automated Admin Elevation**: Automatically detects user privileges and requests UAC elevation (Windows) or Sudo access (Linux/macOS) upon startup.
-* **On-the-Fly Theme Toggle**: Seamlessly switches between a sleek Dark Theme and a clean Light Theme instantly at the click of a button.
-* **Automated Drive Detection**: Automatically maps host storage partitions, calculating available vs. used space in Gigabytes and percentages.
-* **Smart Alert System**: Adaptive color coding (Green, Yellow, Orange, Red) that shifts dynamically based on current resource critical levels.
-* **Instant Refresh**: High-frequency data polling and interface synchronization every 1000 milliseconds (1 second) for precise metric trailing.
+### 🚀 Features
+* **On-the-Fly Multi-Language 🌍**: Native interface tracking for English, German, Russian, and Ukrainian. Prompted during first boot and completely adjustable at runtime via interactive header toggles.
+* **Dynamic Loading Visualizers 🎨**: Text readouts actively shift color gamuts (Green ➔ Yellow ➔ Orange ➔ Red) to reflect performance thresholds instantly.
+* **Cross-Platform Drive Scanner 💾**: Traverses native volumes (`C:\`, `D:\`) or Unix mounts (`/`, `/media`), fetching accurate disk bounds and setting fluid window constraints.
+* **Dual Palette Theme Swapper 🌓**: Seamlessly redraws all canvas frames between customized high-contrast Dark and Light aesthetic models.
+* **Self-Elevating Admin Protocol 🛡️**: Built-in safeguards check user execution context, automatically prompting for UAC permissions to extract secure hardware streams.
 
-### 🛠️ Tech Stack
-* **Runtime**: Python 3.x
-* **Built-in Modules**: `os`, `shutil`, `sys`, `datetime`, `string`, `ctypes`
-* **External Dependencies**: `psutil` (automatically installed globally if missing)
-* **GUI Library**: `tkinter` & `ttk`
-
-### 📂 Layout Structure
-The interface layout consists of three primary functional zones:
-1. **Header & Theme Controller**: Hosts the application title, the theme toggle button, and the exact timestamp of the last data polling event.
-2. **Processor Load Box**: Monitors and visualizes the active, real-time processor utilization.
-3. **Storage Allocation Box**: Renders vertical, scrollable progress bars and text metrics for all active mounted system drives (`C:\`, `D:\` on Windows or `/` on Unix/Linux).
+### 🛠️ Technologies
+* **Framework**: Python Tkinter (stylized with precise structural flat `ttk` parameters)
+* **Metrics Engine**: `psutil` (CPU thread states), `shutil` (high-level storage tracking)
+* **Data Layer**: Clean `json` flat-file pipeline handling long-term translation preferences.
 
 ### 📦 Installation & Setup
-Run the following commands in your terminal to deploy and launch the script:
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/KristinaAlokhina/system_monitor
+#### Option A: Standalone Execution (.exe)
+Grab the standalone `system_monitor.exe` from the GitHub releases pipeline. Completely portable with zero runtime hooks needed.
 
-# 2. Navigate to the project directory
-cd system_monitor
+#### Option B: Source Code Setup
+Requires a standard Python 3.x package configuration environment.
 
-# 3. Run the application (triggers admin UAC prompt)
-python system_monitor.py
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com
+   ```
+2. Navigate to project root:
+   ```bash
+   cd system-monitor
+   ```
+3. Install required library:
+   ```bash
+   pip install psutil
+   ```
+4. Initialize the monitor:
+   ```bash
+   python system_monitor.py
+   ```
+
+---
+
+## 🇷🇺 Русский
+
+Компактная утилита мониторинга ресурсов, которая собирает данные о загруженности процессора и всех доступных в системе жестких дисков. Идеальный инструмент для быстрого контроля за состоянием железа в реальном времени.
+
+### 🚀 Возможности
+* **Мультиязычность на лету (4 языка) 🌍**: Полная поддержка русского, английского, немецкого и украинского языков. Локализация переключается кнопкой в интерфейсе и сохраняется в файл `config.json`.
+* **Умная цветовая индикация 🎨**: Текст с процентами динамически меняет свой цвет в зависимости от тяжести нагрузки (Зеленый ➔ Желтый ➔ Оранжевый ➔ Красный).
+* **Автоопределение накопителей 💾**: Сканирует активные разделы Windows или точки монтирования Unix, рассчитывает объемы накопителей и автоматически подстраивает высоту окна под количество дисков.
+* **Смена тем оформления 🌓**: Полноценная поддержка адаптивного ночного (Dark) и дневного (Light) графических режимов.
+* **Автоматический запуск с правами админа 🛡️**: Скрипт самостоятельно запрашивает повышенные привилегии (UAC) при старте, чтобы иметь беспрепятственный доступ к низкоуровневым метрикам ОС.
+
+### 🛠️ Технологии
+* **Графика**: Python Tkinter (с применением кастомных стилей `ttk`)
+* **Сбор данных**: `psutil` (метрики CPU), `shutil` (анализ дискового пространства)
+* **Конфигурация**: Модуль `json` для хранения языковых предпочтений пользователя между перезапусками.
+
+### 📦 Установка и запуск
+
+#### Вариант А: Готовый исполняемый файл (.exe)
+Скачайте скомпилированный файл `system_monitor.exe` из раздела релизов и запустите его. Установка Python и зависимостей не требуется.
+
+#### Вариант Б: Запуск из исходного кода
+Требуется интерпретатор Python 3.x и библиотека `psutil`.
+
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com
+   ```
+2. Перейдите в папку проекта:
+   ```bash
+   cd system-monitor
+   ```
+3. Установите модуль `psutil`:
+   ```bash
+   pip install psutil
+   ```
+4. Запустите монитор:
+   ```bash
+   python system_monitor.py
+   ```
+
+---
+
+## 🇺🇦 Українська
+
+Компактна утиліта моніторингу ресурсів, що збирає дані про завантаженість процесора та всіх доступних у системі жорстких дисків. Ідеальний інструмент для швидкого контролю стану заліза в реальному часі.
+
+### 🚀 Можливості
+* **Мультиязычність на льоту (4 мови) 🌍**: Повна підтримка української, англійської, німецької та російської мов. Локалізація перемикається однією кнопкою в інтерфейсі та зберігається у файл `config.json`.
+* **Розумна колірна індикація 🎨**: Текст із відсотками динамічно змінює свій колір залежно від рівня навантаження (Зелений ➔ Жовтий ➔ Помаранчевий ➔ Червоний).
+* **Автовизначення накопичувачів 💾**: Сканує активні розділи Windows або точки монтування Unix, розраховує обсяги накопичувачів та автоматично підлаштовує висоту вікна під кількість дисків.
+* **Зміна тем оформлення 🌓**: Повноцінна підтримка адаптивного нічного (Dark) та денного (Light) графічних режимів.
+* **Автоматичний запуск із правами адміна 🛡️**: Скрипт самостійно запитує підвищені привілеї (UAC) під час старту, щоб мати безперешкодний доступ до низькорівневих метрик ОС.
+
+### 🛠️ Технології
+* **Графіка**: Python Tkinter (із застосуванням кастомних стилів `ttk`)
+* **Збір даних**: `psutil` (метрики CPU), `shutil` (аналіз дискового простору)
+* **Конфігурація**: Модуль `json` для збереження мовних уподобань користувача між перезапусками.
+
+### 📦 Встановлення та запуск
+
+#### Вариант А: Готовий виконуваний файл (.exe)
+Завантажте скомпільований файл `system_monitor.exe` із розділу релізів та запустіть його. Встановлення Python та залежностей не потрібне.
+
+#### Вариант Б: Запуск із вихідного коду
+Необхідно мати встановлений інтерпретатор Python 3.x та бібліотеку `psutil`.
+
+1. Клонуйте репозиторій:
+   ```bash
+   git clone https://github.com
+   ```
+2. Перейдіть до папки проєкту:
+   ```bash
+   cd system-monitor
+   ```
+3. Встановіть модуль `psutil`:
+   ```bash
+   pip install psutil
+   ```
+4. Запустіть монітор:
+   ```bash
+   python system_monitor.py
+   ```
